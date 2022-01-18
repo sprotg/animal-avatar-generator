@@ -1,4 +1,4 @@
-def create_svg(size: int, *children) -> str:
+def create_svg(size: int, seed, *children) -> str:
     return f"""
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -9,6 +9,7 @@ def create_svg(size: int, *children) -> str:
         >
             {''.join(children)}
         </svg>
+        <!-- id:{seed}-->
     """
 
 

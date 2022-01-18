@@ -4,7 +4,8 @@ from animal_avatar.palette import AVATAR_COLORS, BACKGROUND_COLORS
 from animal_avatar.shapes import (
     EMPTY_SHAPE, BROWS, EARS,
     EYES, FACES, HAIRS,
-    MUZZLES, PATTERNS
+    MUZZLES, PATTERNS,
+    ACCESSORIES
 )
 from animal_avatar.utils.array import pick
 from animal_avatar.utils.rand import seed_random
@@ -14,8 +15,9 @@ from animal_avatar.utils.svg import create_svg, create_background, create_blacko
 class Avatar:
     def __init__(self, seed: str, size: int = 150,
                  avatar_colors: Sequence = AVATAR_COLORS, background_colors: Sequence = BACKGROUND_COLORS,
-                 blackout: bool = True, is_round: bool = True):
+                 blackout: bool = False, is_round: bool = True):
         self.rng = seed_random(seed)
+        self.seed = seed
         self.size = size
         self.background_color = pick(background_colors, self.rng())
         self.avatar_color = pick(avatar_colors, self.rng())
@@ -26,11 +28,14 @@ class Avatar:
         self.shapes = [
             FACES, self.optional(PATTERNS), EARS,
             self.optional(HAIRS), MUZZLES, EYES,
-            BROWS
+            BROWS, self.rare(ACCESSORIES), self.rare(ACCESSORIES)
         ]
 
     def optional(self, shapes: Sequence) -> tuple:
-        return tuple(shape if self.rng() % 2 else EMPTY_SHAPE for shape in shapes)
+        return tuple(shape if self.rng() % 2 == 0 else EMPTY_SHAPE for shape in shapes)
+
+    def rare(self, shapes: Sequence) -> tuple:
+        return tuple(shape if self.rng() % 10 == 0 else EMPTY_SHAPE for shape in shapes)
 
     def set_avatar(self) -> None:
         self.avatar = ''.join(
@@ -41,6 +46,7 @@ class Avatar:
         self.set_avatar()
         return create_svg(
             self.size,
+            self.seed,
             create_background(self.is_round, self.background_color),
             self.avatar,
             create_blackout(self.is_round) if self.blackout else ''
