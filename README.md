@@ -1,13 +1,7 @@
 <h2>Info</h2>
-<p>Python implementation of <a href="https://github.com/roma-lukashik/animal-avatar-generator">Animal Avatar Generator</a></p>
+<p>This is a fork of https://github.com/Nacht1gall/animal-avatar-generator which is a Python implementation of <a href="https://github.com/roma-lukashik/animal-avatar-generator">Animal Avatar Generator</a></p>
 <p>All credit goes to the original creator</p>
 
-<h2>Installing</h2>
-Install using `pip`:
-
-```text
-pip install animal-avatar
-```
 
 <h2>Usage</h2>
 
