@@ -28,14 +28,14 @@ class Avatar:
         self.shapes = [
             FACES, self.optional(PATTERNS), EARS,
             self.optional(HAIRS), MUZZLES, EYES,
-            BROWS, self.rare(ACCESSORIES), self.rare(ACCESSORIES)
+            BROWS, self.rare(ACCESSORIES, 3), self.rare(ACCESSORIES, 10)
         ]
 
     def optional(self, shapes: Sequence) -> tuple:
         return tuple(shape if self.rng() % 2 == 0 else EMPTY_SHAPE for shape in shapes)
 
-    def rare(self, shapes: Sequence) -> tuple:
-        return tuple(shape if self.rng() % 10 == 0 else EMPTY_SHAPE for shape in shapes)
+    def rare(self, shapes: Sequence, rarity) -> tuple:
+        return tuple(shape if self.rng() % rarity == 0 else EMPTY_SHAPE for shape in shapes)
 
     def set_avatar(self) -> None:
         self.avatar = ''.join(
